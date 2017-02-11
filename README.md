@@ -19,13 +19,13 @@ Tensor is an IM client for the [Matrix](https://matrix.org) protocol in developm
 Just install things from "Pre-requisites" using your preferred package manager. If your Qt package base is fine-grained you might want to take a look at CMakeLists.txt to figure out which specific libraries Tensor uses.
 
 ### Building
-From the root directory of the project sources:
+From the root directory of the project sources, first update submodules:
+
 ```
-mkdir build
-cd build
-cmake ../
-make
+git submodule update --init # pull in qmatrixclient library
 ```
+
+Then open the project in QtCreator and build.
 
 ### Installation
 From the root directory of the project sources:
@@ -46,39 +46,7 @@ Alternatively, [Download *Qt for Android*](http://www.qt.io/download-open-source
 
 ![Screenshot](screen/osx.png)
 
-```
-brew install qt5
-git submodule update --init # pull in qmatrixclient library
-cd lib
-git submodule update --init # pull in the KCoreAddons package
-cd ..
-mkdir build
-cd build
-cmake ../ -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.5.1/ # or whatever version of qt5 brew installed
-make
-tensor &
-```
 
-### Troubleshooting
-
-If `cmake` fails with...
-```
-CMake Warning at CMakeLists.txt:11 (find_package):
-  By not providing "FindQt5Widgets.cmake" in CMAKE_MODULE_PATH this project
-  has asked CMake to find a package configuration file provided by
-  "Qt5Widgets", but CMake did not find one.
-```
-...then you need to set the right -DCMAKE_PREFIX_PATH variable, see above.
-
-If `make` fails with...
-```
-Scanning dependencies of target tensor
-make[2]: *** No rule to make target `CMakeFiles/tensor.dir/build'.  Stop.
-make[1]: *** [CMakeFiles/tensor.dir/all] Error 2
-```
-...then cmake failed to create a build target for tensor as it couldn't find
-an optional dependency - probably KCoreAddons.  You probably forgot to do the
-`git submodule init && git submodule update` dance.
 
 ## iOS
 

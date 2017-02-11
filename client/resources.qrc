@@ -6,5 +6,6 @@
         <file>qml/Tensor.qml</file>
         <file>qml/ChatRoom.qml</file>
         <file>qml/RoomView.qml</file>
+        <file>qml/jschat.js</file>
     </qresource>
 </RCC>

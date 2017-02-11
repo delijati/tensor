@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import Matrix 1.0
+import 'jschat.js' as JsChat
 
 Rectangle {
     id: root
@@ -41,17 +42,21 @@ Rectangle {
                 color: "grey"
             }
             Label {
-                width: 64
+                id: authorlabel
+                width: 100
                 elide: Text.ElideRight
                 text: eventType == "message" ? author : "***"
-                color: eventType == "message" ? "grey" : "lightgrey"
+                font.family: JsChat.Theme.NickFont
+                color: eventType == "message" ? JsChat.NickColoring.get(author): "lightgrey"
                 horizontalAlignment: Text.AlignRight
             }
             Label {
+                id: contentlabel
                 text: content
                 wrapMode: Text.Wrap
                 width: parent.width - (x - parent.x) - spacing
                 color: eventType == "message" ? "black" : "lightgrey"
+                font.family: JsChat.Theme.TextFont
             }
         }
 

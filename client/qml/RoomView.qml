@@ -1,10 +1,16 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.4
+import 'jschat.js' as JsChat
 
 Item {
     id: room
 
+    property var currentRoom
+    property var completion
+
     function setRoom(room) {
+        currentRoom = room
         chat.setRoom(room)
     }
 
@@ -15,6 +21,18 @@ Item {
     function sendLine(line) {
         chat.sendLine(line)
         textEntry.text = ''
+    }
+
+    function onKeyPressed(event) {
+        if ((event.key === Qt.Key_Tab) || (event.key === Qt.Key_Backtab)) {
+            if (completion === null) completion = new JsChat.NameCompletion(currentRoom.usernames(), textEntry.text);
+            event.accepted = true;
+            textEntry.text = completion.complete(event.key === Qt.Key_Tab);
+
+        } else if ((event.key !== Qt.Key_Shift) && (event.key !== Qt.Key_Alt) && (event.key !== Qt.Key_Control)) {
+            // reset
+            completion = null;
+        }
     }
 
     ChatRoom {
@@ -31,8 +49,19 @@ Item {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         focus: true
-        textColor: "black"
+        /*
+        style: TextFieldStyle {
+            textColor: "black"
+            background: Rectangle {
+                color: "white"
+            }
+        }
+        */
+
         placeholderText: qsTr("Say something...")
         onAccepted: sendLine(text)
+
+        Keys.onBacktabPressed: onKeyPressed(event)
+        Keys.onPressed: onKeyPressed(event)
     }
 }

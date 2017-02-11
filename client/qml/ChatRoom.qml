@@ -9,6 +9,7 @@ Rectangle {
     property Connection currentConnection: null
     property var currentRoom: null
 
+
     function setRoom(room) {
         currentRoom = room
         messageModel.changeRoom(room)
@@ -46,7 +47,7 @@ Rectangle {
                 width: 100
                 elide: Text.ElideRight
                 text: eventType == "message" ? author : "***"
-                font.family: JsChat.Theme.NickFont
+                font.family: JsChat.Theme.nickFont()
                 color: eventType == "message" ? JsChat.NickColoring.get(author): "lightgrey"
                 horizontalAlignment: Text.AlignRight
             }
@@ -56,7 +57,8 @@ Rectangle {
                 wrapMode: Text.Wrap
                 width: parent.width - (x - parent.x) - spacing
                 color: eventType == "message" ? "black" : "lightgrey"
-                font.family: JsChat.Theme.TextFont
+                font.family: JsChat.Theme.textFont()
+                font.pointSize: JsChat.Theme.textSize()
             }
         }
 

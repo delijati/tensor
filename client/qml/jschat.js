@@ -62,8 +62,9 @@ var NickColoring = {
 };
 
 var Theme = {
-	NickFont: 'Monaco',
-	TextFont: 'Monaco'
+    textFont: function() { return Qt.platform.os == 'windows' ? 'Consolas' : 'Monaco' },
+    nickFont: function() { return Theme.textFont(); },
+    textSize: function() { return 11; }
 
 };
 

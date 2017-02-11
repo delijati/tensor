@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import Matrix 1.0
+import 'jschat.js' as JsChat
 
 Rectangle {
     color: "#6a1b9a"
@@ -34,6 +35,11 @@ Rectangle {
     function refresh() {
         if(roomListView.visible)
             roomListView.forceLayout()
+    }
+
+    function changeRoom(dir) {
+        roomListView.currentIndex = JsChat.posmod(roomListView.currentIndex + dir, roomListView.count);
+        enterRoom(rooms.roomAt(roomListView.currentIndex))
     }
 
     Column {

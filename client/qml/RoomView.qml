@@ -9,6 +9,8 @@ Item {
     property var currentRoom
     property var completion
 
+    signal changeRoom(int dir)
+
     function setRoom(room) {
         currentRoom = room
         chat.setRoom(room)
@@ -32,6 +34,17 @@ Item {
         } else if ((event.key !== Qt.Key_Shift) && (event.key !== Qt.Key_Alt) && (event.key !== Qt.Key_Control)) {
             // reset
             completion = null;
+        }
+
+        if ((event.modifiers & Qt.ControlModifier) === Qt.ControlModifier) {
+            if (event.key === Qt.Key_PageUp) {
+                event.accepted = true;
+                changeRoom(-1);
+            }
+            else if (event.key === Qt.Key_PageDown) {
+                event.accepted = true;
+                changeRoom(1);
+            }
         }
     }
 

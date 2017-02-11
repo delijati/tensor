@@ -79,6 +79,7 @@ Rectangle {
                 height: parent.height
                 Component.onCompleted: {
                     setConnection(connection)
+                    roomView.changeRoom.connect(roomListItem.changeRoom)
                 }
             }
         }

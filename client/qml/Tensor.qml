@@ -5,8 +5,8 @@ import Matrix 1.0
 Rectangle {
     id: window
     visible: true
-    width: 800
-    height: 480
+    width: 960
+    height: 600
     focus: true
     color: "#eee"
 

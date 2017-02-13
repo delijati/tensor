@@ -94,13 +94,13 @@ int MessageEventModel::rowCount(const QModelIndex& parent) const
 {
     if( !m_currentRoom || parent.isValid() )
         return 0;
-    return m_currentRoom->messageEvents().count();
+	return m_currentRoom->messageEvents().size();
 }
 
 QVariant MessageEventModel::data(const QModelIndex& index, int role) const
 {
     if( !m_currentRoom ||
-            index.row() < 0 || index.row() >= m_currentRoom->messageEvents().count() )
+			index.row() < 0 || index.row() >= m_currentRoom->messageEvents().size() )
         return QVariant();
 
     QMatrixClient::Event* event = *(m_currentRoom->messageEvents().end() - index.row() - 1);

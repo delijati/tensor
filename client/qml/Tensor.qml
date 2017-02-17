@@ -28,6 +28,7 @@ Rectangle {
     function login(user, pass, connect) {
         if(!connect) connect = connection.connectToServer
 
+        // TODO: apparently reconnect is done with password but only a token is available so it won't reconnect
         connection.connected.connect(function() {
             settings.setValue("user",  connection.userId())
             settings.setValue("token", connection.token())

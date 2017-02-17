@@ -13,6 +13,7 @@ Rectangle {
     function setRoom(room) {
         currentRoom = room
         messageModel.changeRoom(room)
+        chatView.positionViewAtBeginning()
     }
 
     function setConnection(conn) {
@@ -23,6 +24,7 @@ Rectangle {
     function sendLine(text) {
         if(!currentRoom || !currentConnection) return
         currentConnection.postMessage(currentRoom, "m.text", text)
+        chatView.positionViewAtBeginning()
     }
 
     ListView {

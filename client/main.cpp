@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QtQml>
 
@@ -27,7 +28,10 @@ int main(int argc, char* argv[]) {
         f.setVersion(4, 4);
         view.setFormat(f);
     }
-    view.connect(view.engine(), SIGNAL(quit()), &app, SLOT(quit()));
+    QQmlApplicationEngine engine;
+    engine.addImportPath("./lib/arm-linux-gnueabihf/QtQuick/Controls");
+    engine.addImportPath("./lib/arm-linux-gnueabihf/QtQuick/Dialogs");
+    view.connect(&engine, SIGNAL(quit()), &app, SLOT(quit()));
     new QQmlFileSelector(view.engine(), &view);
 
     qmlRegisterType<SyncJob>(); qRegisterMetaType<SyncJob*> ("SyncJob*");

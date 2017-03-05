@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=tensor
+Exec=tensor
+Icon=tensor.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+

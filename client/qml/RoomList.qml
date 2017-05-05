@@ -20,16 +20,17 @@ Rectangle {
     }
 
     function init() {
+        var defaultRoom = "#tensor:matrix.org"
         initialised = true
         var found = false
-        for(var i = 0; i < rooms.rowCount(); i++) {
-            if(rooms.roomAt(i).canonicalAlias() === "#tensor:matrix.org") {
+        for (var i = 0; i < rooms.rowCount(); i++) {
+            if (rooms.roomAt(i).canonicalAlias() === defaultRoom) {
                 roomListView.currentIndex = i
                 enterRoom(rooms.roomAt(i))
                 found = true
             }
         }
-        if(!found) joinRoom("#tensor:matrix.org")
+        if (!found) joinRoom(defaultRoom)
     }
 
     function refresh() {
@@ -40,6 +41,13 @@ Rectangle {
     function changeRoom(dir) {
         roomListView.currentIndex = JsChat.posmod(roomListView.currentIndex + dir, roomListView.count);
         enterRoom(rooms.roomAt(roomListView.currentIndex))
+    }
+
+    function currentRoom() {
+        if (roomListView.currentIndex < 0) return null
+        var room = rooms.roomAt(roomListView.currentIndex)
+        console.log("currentRoom ", roomListView.currentIndex, roomListView.count, "unread:", room.hasUnreadMessages())
+        return room
     }
 
     Column {
@@ -59,8 +67,9 @@ Rectangle {
                 Label {
                     id: roomLabel
                     text: display
-                    color: "white"
+                    color: rooms.roomAt(index).hasUnreadMessages() ? "yellow" : "white"
                     elide: Text.ElideRight
+                    font.family: JsChat.Theme.nickFont()
                     font.bold: roomListView.currentIndex == index
                     anchors.margins: 2
                     anchors.leftMargin: 6
@@ -83,6 +92,7 @@ Rectangle {
                 radius: 2
                 color: "#9c27b0"
             }
+            highlightMoveDuration: 0
 
             onCountChanged: if(initialised) {
                 roomListView.currentIndex = count-1

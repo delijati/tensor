@@ -56,14 +56,17 @@ Item {
         anchors.top: parent.top
     }
 
+
     TextField {
         id: textEntry
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         focus: true
-        /*
         style: TextFieldStyle {
+            font: JsChat.Theme.textFont()
+        }
+            /*
             textColor: "black"
             background: Rectangle {
                 color: "white"

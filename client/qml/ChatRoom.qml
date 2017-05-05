@@ -43,10 +43,12 @@ Rectangle {
                 id: timelabel
                 text: time.toLocaleTimeString("hh:mm:ss")
                 color: "grey"
+                width: 80
+                horizontalAlignment: Text.AlignRight
             }
             Label {
                 id: authorlabel
-                width: 100
+                width: 140
                 elide: Text.ElideRight
                 text: eventType == "message" ? author : "***"
                 font.family: JsChat.Theme.nickFont()

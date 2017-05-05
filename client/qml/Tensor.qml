@@ -7,7 +7,6 @@ Rectangle {
     visible: true
     width: 960
     height: 600
-    focus: true
     color: "#eee"
 
     property bool initialised: false

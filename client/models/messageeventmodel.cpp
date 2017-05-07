@@ -103,7 +103,7 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
 			index.row() < 0 || index.row() >= m_currentRoom->messageEvents().size() )
         return QVariant();
 
-    QMatrixClient::Event* event = *(m_currentRoom->messageEvents().end() - index.row() - 1);
+    QMatrixClient::Event *event = (m_currentRoom->messageEvents().end() - index.row() - 1)->event();
 
     if( role == Qt::DisplayRole )
     {

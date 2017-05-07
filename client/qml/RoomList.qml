@@ -24,7 +24,7 @@ Rectangle {
         initialised = true
         var found = false
         for (var i = 0; i < rooms.rowCount(); i++) {
-            if (rooms.roomAt(i).canonicalAlias() === defaultRoom) {
+            if (rooms.roomAt(i).canonicalAlias === defaultRoom) {
                 roomListView.currentIndex = i
                 enterRoom(rooms.roomAt(i))
                 found = true

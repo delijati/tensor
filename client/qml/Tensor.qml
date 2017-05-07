@@ -32,7 +32,8 @@ Rectangle {
             settings.setValue("user",  connection.userId())
             settings.setValue("token", connection.token())
 
-            connection.connectionError.connect(connection.reconnect)
+            connection.syncError.connect(connection.reconnect)
+            connection.resolveError.connect(connection.reconnect)
             connection.syncDone.connect(resync)
             connection.reconnected.connect(resync)
 

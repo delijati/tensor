@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import Matrix 1.0
+import Tensor 1.0
 
 Rectangle {
     id: window
@@ -12,7 +13,13 @@ Rectangle {
     property bool initialised: false
 
     Connection { id: connection }
-    Settings   { id: settings }
+    Settings   {
+        id: settings
+        Component.onCompleted: {
+            Theme.loadFromSettings(settings)
+
+        }
+    }
 
     function resync() {
         if(!initialised) {

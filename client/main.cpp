@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<MessageEventModel> ("Matrix", 1, 0, "MessageEventModel");
     qmlRegisterType<RoomListModel>     ("Matrix", 1, 0, "RoomListModel");
     qmlRegisterType<Settings>          ("Matrix", 1, 0, "Settings");
+    qmlRegisterSingletonType(QUrl("qrc:/qml/Theme.qml"), "Tensor", 1, 0, "Theme");
 
     view.setSource(QUrl("qrc:/qml/Tensor.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);

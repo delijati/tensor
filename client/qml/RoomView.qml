@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.4
+import Tensor 1.0
 import 'jschat.js' as JsChat
 
 Item {
@@ -64,7 +65,7 @@ Item {
         anchors.bottom: parent.bottom
         focus: true
         style: TextFieldStyle {
-            font: JsChat.Theme.textFont()
+            font: Theme.textFont
         }
             /*
             textColor: "black"

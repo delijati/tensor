@@ -1,10 +1,12 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import Matrix 1.0
+import Tensor 1.0
 import 'jschat.js' as JsChat
 
 Rectangle {
     id: root
+    color: Theme.chatBg
 
     property Connection currentConnection: null
     property var currentRoom: null
@@ -51,7 +53,7 @@ Rectangle {
                 width: 140
                 elide: Text.ElideRight
                 text: eventType == "message" ? author : "***"
-                font.family: JsChat.Theme.nickFont()
+                font.family: Theme.nickFont
                 color: eventType == "message" ? JsChat.NickColoring.get(author): "lightgrey"
                 horizontalAlignment: Text.AlignRight
             }
@@ -61,8 +63,8 @@ Rectangle {
                 wrapMode: Text.Wrap
                 width: parent.width - (x - parent.x) - spacing
                 color: eventType == "message" ? "black" : "lightgrey"
-                font.family: JsChat.Theme.textFont()
-                font.pointSize: JsChat.Theme.textSize()
+                font.family: Theme.textFont
+                font.pointSize: Theme.textSize
             }
         }
 

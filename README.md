@@ -100,3 +100,9 @@ mingw32-make
 
 ### Installation
 There is no installer configuration for Windows as of yet. You might want to use [the Windows Deployment Tool](http://doc.qt.io/qt-5/windows-deployment.html#the-windows-deployment-tool) that comes with Qt to find all dependencies and put them into the build directory. Though it misses on a library or two it helps a lot. To double-check that you're good to go you can use [the Dependencies Walker tool aka depends.exe](http://www.dependencywalker.com/) - this is especially needed when you have a mixed 32/64-bit environment or have different versions of the same library scattered around.
+
+
+# Dependencies
+
+Qt requires OpenSSL to make secure connections. The correct version for a given Qt version is given at https://wiki.qt.io/Qt_5.8_Tools_and_Versions, for Qt 5.8 it is openssl 1.0.2h
+The easiest way to install a binary version seems to be with conan package manager.

@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import Matrix 1.0
+import Tensor 1.0
 import 'jschat.js' as JsChat
 
 Rectangle {
-    color: "#6a1b9a"
+    color: Theme.roomListBg
 
     signal enterRoom(var room)
     signal joinRoom(string name)
@@ -69,7 +70,7 @@ Rectangle {
                     text: display
                     color: rooms.roomAt(index).hasUnreadMessages() ? "yellow" : "white"
                     elide: Text.ElideRight
-                    font.family: JsChat.Theme.nickFont()
+                    font.family: Theme.nickFont
                     font.bold: roomListView.currentIndex == index
                     anchors.margins: 2
                     anchors.leftMargin: 6
@@ -90,7 +91,7 @@ Rectangle {
             highlight: Rectangle {
                 height: 20
                 radius: 2
-                color: "#9c27b0"
+                color: Theme.roomListSelectedBg
             }
             highlightMoveDuration: 0
 

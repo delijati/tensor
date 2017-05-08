@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
     app.setOrganizationName("David A Roberts");
     app.setOrganizationDomain("davidar.io");
     app.setApplicationName("Tensor");
+	QSettings::setDefaultFormat(QSettings::IniFormat);
     QQuickView view;
     if(qgetenv("QT_QUICK_CORE_PROFILE").toInt()) {
         QSurfaceFormat f = view.format();

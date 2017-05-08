@@ -68,7 +68,7 @@ Rectangle {
                 Label {
                     id: roomLabel
                     text: display
-                    color: rooms.roomAt(index).hasUnreadMessages() ? "yellow" : "white"
+                    //color: rooms.roomAt(index).hasUnreadMessages() ? "white" : "black"
                     elide: Text.ElideRight
                     font.family: Theme.nickFont
                     font.bold: roomListView.currentIndex == index

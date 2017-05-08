@@ -21,6 +21,10 @@ Item {
         chat.setConnection(conn)
     }
 
+    function displayStatus(stat) {
+        chat.status = stat
+    }
+
     function sendLine(line) {
         chat.sendLine(line)
         textEntry.text = ''

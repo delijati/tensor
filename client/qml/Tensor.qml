@@ -17,7 +17,6 @@ Rectangle {
         id: settings
         Component.onCompleted: {
             Theme.loadFromSettings(settings)
-
         }
     }
 
@@ -38,10 +37,14 @@ Rectangle {
         connection.connected.connect(function() {
             settings.setValue("user",  connection.userId())
             settings.setValue("token", connection.token())
+            roomView.displayStatus("connected")
 
             connection.syncError.connect(connection.reconnect)
+            connection.syncError.connect(function() { roomView.displayStatus("sync error")})
             connection.resolveError.connect(connection.reconnect)
+            connection.resolveError.connect(function() { roomView.displayStatus("resolve error")})
             connection.syncDone.connect(resync)
+            connection.syncDone.connect(function() { roomView.displayStatus("synced") })
             connection.reconnected.connect(resync)
 
             connection.sync()
@@ -60,6 +63,7 @@ Rectangle {
             connection.resolveServer(userParts[1])
         }
     }
+
 
     Item {
         id: mainView

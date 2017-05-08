@@ -10,6 +10,7 @@ Rectangle {
 
     property Connection currentConnection: null
     property var currentRoom: null
+    property string status: ""
 
 
     function setRoom(room) {
@@ -74,9 +75,10 @@ Rectangle {
             delegate: Rectangle {
                 width: parent.width
                 height: childrenRect.height
+                color: Theme.chatBg
                 Label {
                     width: parent.width
-                    text: section.toLocaleString(Qt.locale())
+                    text: status + " " + section.toLocaleString(Qt.locale())
                     color: "grey"
                     horizontalAlignment: Text.AlignRight
                 }

@@ -16,6 +16,7 @@ Rectangle {
     function setRoom(room) {
         currentRoom = room
         messageModel.changeRoom(room)
+        room.markAllMessagesAsRead()
         chatView.positionViewAtBeginning()
     }
 

@@ -71,13 +71,6 @@ Item {
         style: TextFieldStyle {
             font: Theme.textFont
         }
-            /*
-            textColor: "black"
-            background: Rectangle {
-                color: "white"
-            }
-        }
-        */
 
         placeholderText: qsTr("Say something...")
         onAccepted: sendLine(text)

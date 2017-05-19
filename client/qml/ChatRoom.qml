@@ -65,8 +65,11 @@ Rectangle {
                 wrapMode: Text.Wrap
                 width: parent.width - (x - parent.x) - spacing
                 color: eventType == "message" ? "black" : "lightgrey"
+                linkColor: "black"
+                textFormat: Text.RichText
                 font.family: Theme.textFont
                 font.pointSize: Theme.textSize
+                onLinkActivated: Qt.openUrlExternally(link)
             }
         }
 

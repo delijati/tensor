@@ -30,6 +30,10 @@ Rectangle {
         connection.sync(30000)
     }
 
+    function reconnect() {
+        connection.connectWithToken(connection.userId(), connection.token())
+    }
+
     function login(user, pass, connect) {
         if(!connect) connect = connection.connectToServer
 
@@ -39,9 +43,9 @@ Rectangle {
             settings.setValue("token", connection.token())
             roomView.displayStatus("connected")
 
-            connection.syncError.connect(connection.reconnect)
+            connection.syncError.connect(reconnect)
             connection.syncError.connect(function() { roomView.displayStatus("sync error")})
-            connection.resolveError.connect(connection.reconnect)
+            connection.resolveError.connect(reconnect)
             connection.resolveError.connect(function() { roomView.displayStatus("resolve error")})
             connection.syncDone.connect(resync)
             connection.syncDone.connect(function() { roomView.displayStatus("synced") })

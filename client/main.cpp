@@ -20,7 +20,12 @@ int main(int argc, char* argv[]) {
     app.setOrganizationName("David A Roberts");
     app.setOrganizationDomain("davidar.io");
     app.setApplicationName("Tensor");
+	app.setApplicationVersion("Q0.1");
 	QSettings::setDefaultFormat(QSettings::IniFormat);
+
+	// debugging
+	QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
+
     QQuickView view;
     if(qgetenv("QT_QUICK_CORE_PROFILE").toInt()) {
         QSurfaceFormat f = view.format();
@@ -43,6 +48,7 @@ int main(int argc, char* argv[]) {
 
     view.setSource(QUrl("qrc:/qml/Tensor.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+	view.setTitle("Tensor " + app.applicationVersion());
     if(QGuiApplication::platformName() == QLatin1String("qnx") ||
        QGuiApplication::platformName() == QLatin1String("eglfs")) {
         view.showFullScreen();

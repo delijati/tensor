@@ -14,6 +14,13 @@ Rectangle {
 
     RoomListModel {
         id: rooms
+
+        onDataChanged: {
+            // may have received a message but if focused, mark as read
+            var room = currentRoom()
+            if (room != null) room.markAllMessagesAsRead()
+
+        }
     }
 
     function setConnection(conn) {
@@ -99,6 +106,7 @@ Rectangle {
                 roomListView.currentIndex = count-1
                 enterRoom(rooms.roomAt(count-1))
             }
+
         }
 
         TextField {

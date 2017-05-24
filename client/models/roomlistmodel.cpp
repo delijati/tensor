@@ -85,12 +85,10 @@ QVariant RoomListModel::data(const QModelIndex& index, int role) const
     QMatrixClient::Room* room = m_rooms.at(index.row());
     if( role == Qt::DisplayRole )
     {
-		qDebug() << "display role queried: " << room->displayName();
 		return room->displayName();
     }
 	if ( role == RoomEventStateRole )
     {
-		qDebug() << "RoomEventStateRole role queried " << room->hasUnreadMessages();
 		if (room->highlightCount() > 0) {
 			return "highlight";
 		} else if (room->hasUnreadMessages()) {

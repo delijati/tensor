@@ -50,7 +50,14 @@ Item {
                 event.accepted = true;
                 changeRoom(1);
             }
+        } else if (event.key == Qt.Key_PageUp) {
+            chat.scrollPage(-1);
+
+        } else if (event.key == Qt.Key_PageDown) {
+            chat.scrollPage(+1);
+
         }
+
     }
 
     ChatRoom {

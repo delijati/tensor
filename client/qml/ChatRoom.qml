@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.1
 import Matrix 1.0
 import Tensor 1.0
 import 'jschat.js' as JsChat
@@ -29,6 +29,10 @@ Rectangle {
         if(!currentRoom || !currentConnection) return
         currentConnection.postMessage(currentRoom, "m.text", text)
         chatView.positionViewAtBeginning()
+    }
+
+    function scrollPage(amount) {
+        scrollBar.position += amount * scrollBar.stepSize;
     }
 
     ListView {
@@ -91,6 +95,11 @@ Rectangle {
 
         onAtYBeginningChanged: {
             if(currentRoom && atYBeginning) currentRoom.getPreviousContent()
+        }
+
+        ScrollBar.vertical: ScrollBar {
+            id: scrollBar
+            stepSize: 0.1
         }
     }
 }

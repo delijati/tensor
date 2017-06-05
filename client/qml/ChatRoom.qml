@@ -90,7 +90,7 @@ Rectangle {
         }
 
         onAtYBeginningChanged: {
-            if(currentRoom && atYBeginning) currentRoom.getPreviousContent()
+            if(currentRoom && atYBeginning) currentRoom.getPreviousContent(50)
         }
     }
 }

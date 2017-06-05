@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     app.setOrganizationName("David A Roberts");
     app.setOrganizationDomain("davidar.io");
     app.setApplicationName("Tensor");
-	app.setApplicationVersion("Q0.1");
+    app.setApplicationVersion("Q0.4");
 	QSettings::setDefaultFormat(QSettings::IniFormat);
 
 	// debugging

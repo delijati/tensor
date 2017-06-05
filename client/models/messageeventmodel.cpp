@@ -66,7 +66,6 @@ void MessageEventModel::changeRoom(QMatrixClient::Room* room)
                 });
         connect( room, &Room::addedMessages,
                  this, &MessageEventModel::endInsertRows );
-        qDebug() << "connected" << room;
     }
     endResetModel();
 }
@@ -165,8 +164,7 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
         if( event->type() == QMatrixClient::EventType::RoomMessage )
         {
             QMatrixClient::RoomMessageEvent* e = static_cast<QMatrixClient::RoomMessageEvent*>(event);
-            QMatrixClient::User *user = m_connection->user(e->userId());
-			qDebug() << "USER name=" << user->name() << " display=" << user->displayname() << " id=" << user->id() << " event.userid=" << e->userId();
+            QMatrixClient::User *user = m_connection->user(e->senderId());
 			return user->name();
         }
         return QVariant();

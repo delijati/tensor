@@ -6,24 +6,15 @@ function posmod(x, m) {
 
 function NameCompletion(userlist_, prefix_) {
 	this.userlist = [];
-	for (var i in userlist_) {
-		if (userlist_[i].startsWith(prefix_)) {
-			this.userlist.push(NameCompletion.stripIRC(userlist_[i]));
+    this.prefix = prefix_.toLowerCase();
+    for (var i in userlist_) {
+        if (userlist_[i].toLowerCase().startsWith(this.prefix)) {
+            this.userlist.push(userlist_[i]);
 		}
 	}
-	this.prefix = prefix_;
 	this.index = -1;
 	this.last_dir = 1;
 }
-
-NameCompletion.stripIRC = function(username) {
-	var suff = ' (IRC)';
-	if (username.endsWith(suff)) {
-		return username.substr(0, username.length - suff.length);
-	} else {
-		return username;
-	}
-};
 
 NameCompletion.prototype.get = function(forward) {
 	if (this.prefix.length === 0) throw new Error('no_prefix');

@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
     app.setOrganizationDomain("davidar.io");
     app.setApplicationName("Tensor");
     app.setApplicationVersion("Q0.4");
-	QSettings::setDefaultFormat(QSettings::IniFormat);
+    QSettings::setDefaultFormat(QSettings::IniFormat);
 
 	// debugging
 	QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
@@ -43,7 +43,6 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<Connection>        ("Matrix", 1, 0, "Connection");
     qmlRegisterType<MessageEventModel> ("Matrix", 1, 0, "MessageEventModel");
     qmlRegisterType<RoomListModel>     ("Matrix", 1, 0, "RoomListModel");
-    qmlRegisterType<Settings>          ("Matrix", 1, 0, "Settings");
     qmlRegisterSingletonType(QUrl("qrc:/qml/Theme.qml"), "Tensor", 1, 0, "Theme");
 
     view.setSource(QUrl("qrc:/qml/Tensor.qml"));

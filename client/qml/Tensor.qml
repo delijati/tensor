@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import Qt.labs.settings 1.0
 import Matrix 1.0
 import Tensor 1.0
 
@@ -15,9 +16,12 @@ Rectangle {
     Connection { id: connection }
     Settings   {
         id: settings
-        Component.onCompleted: {
-            Theme.loadFromSettings(settings)
-        }
+
+        property string user: ""
+        property string token: ""
+
+        property alias winWidth: window.width
+        property alias winHeight: window.height
     }
 
     function resync() {
@@ -39,8 +43,8 @@ Rectangle {
 
         // TODO: apparently reconnect is done with password but only a token is available so it won't reconnect
         connection.connected.connect(function() {
-            settings.setValue("user",  connection.userId())
-            settings.setValue("token", connection.token())
+            settings.user = connection.userId()
+            settings.token = connection.token()
             roomView.displayStatus("connected")
 
             connection.syncError.connect(reconnect)
@@ -106,8 +110,8 @@ Rectangle {
         window: window
         anchors.fill: parent
         Component.onCompleted: {
-            var user =  settings.value("user")
-            var token = settings.value("token")
+            var user = settings.user
+            var token = settings.token
             if(user && token) {
                 login.login(true)
                 window.login(user, token, connection.connectWithToken)

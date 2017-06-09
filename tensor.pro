@@ -1,7 +1,7 @@
 TEMPLATE = app
 
 QT += qml quick
-CONFIG += c++11 qml_debug
+CONFIG += c++11 #qml_debug
 
 include(lib/libqmatrixclient.pri)
 

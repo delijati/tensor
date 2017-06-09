@@ -24,7 +24,8 @@ int main(int argc, char* argv[]) {
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
 	// debugging
-	QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
+    //QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
+    //QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.events.warning=true"));
 
     QQuickView view;
     if(qgetenv("QT_QUICK_CORE_PROFILE").toInt()) {

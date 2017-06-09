@@ -54,7 +54,6 @@ Rectangle {
     function currentRoom() {
         if (roomListView.currentIndex < 0) return null
         var room = rooms.roomAt(roomListView.currentIndex)
-        console.log("currentRoom ", roomListView.currentIndex, roomListView.count, "unread:", room.hasUnreadMessages())
         return room
     }
 

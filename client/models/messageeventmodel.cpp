@@ -19,7 +19,7 @@
 #include "messageeventmodel.h"
 
 #include <algorithm>
-
+#include <QtCore/QRegularExpression>
 #include <QtCore/QDebug>
 
 #include "lib/connection.h"
@@ -175,9 +175,12 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
         if( event->type() == QMatrixClient::EventType::RoomMessage )
         {
             QMatrixClient::RoomMessageEvent* e = static_cast<QMatrixClient::RoomMessageEvent*>(event);
-			QRegExp reLinks("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
-			QString body = e->plainBody();
+            QString body = e->plainBody();
+            body.replace("<", "&lt;").replace(">", "&gt;");
+
+            QRegularExpression reLinks("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
 			body.replace(reLinks, "<a href=\"\\1\">\\1</a>");
+
 			return body;
         }
         if( event->type() == QMatrixClient::EventType::RoomMember )

@@ -43,7 +43,8 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<RoomListModel>     ("Matrix", 1, 0, "RoomListModel");
     qmlRegisterType<Settings>          ("Matrix", 1, 0, "Settings");
 
-    view.setSource(QUrl("qrc:/qml/Tensor.qml"));
+    // view.setSource(QUrl("qrc:/qml/Tensor.qml"));
+    view.setSource(QUrl("qrc:/ubuntu/qml/ubuntu/Tensor.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     if(QGuiApplication::platformName() == QLatin1String("qnx") ||
        QGuiApplication::platformName() == QLatin1String("eglfs")) {

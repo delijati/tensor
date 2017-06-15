@@ -30,7 +30,7 @@ Item {
         textEntry.text = ''
     }
 
-    function onKeyPressed(event) {
+    function onKeyPressed(event, isBackTab) {
         if ((event.key === Qt.Key_Tab) || (event.key === Qt.Key_Backtab)) {
             if (completion === null) completion = new JsChat.NameCompletion(currentRoom.memberNames(), textEntry.text);
             event.accepted = true;
@@ -40,6 +40,8 @@ Item {
             // reset
             completion = null;
         }
+
+        if (isBackTab) return;
 
         if ((event.modifiers & Qt.ControlModifier) === Qt.ControlModifier) {
             if (event.key === Qt.Key_PageUp) {
@@ -82,7 +84,7 @@ Item {
         placeholderText: qsTr("Say something...")
         onAccepted: sendLine(text)
 
-        Keys.onBacktabPressed: onKeyPressed(event)
-        Keys.onPressed: onKeyPressed(event)
+        Keys.onBacktabPressed: onKeyPressed(event, true)
+        Keys.onPressed: onKeyPressed(event, false)
     }
 }

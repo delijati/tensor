@@ -32,7 +32,7 @@ Rectangle {
     }
 
     function scrollPage(amount) {
-        scrollBar.position += amount * scrollBar.stepSize;
+        scrollBar.position = Math.max(0, Math.min(1 - scrollBar.size, scrollBar.position + amount * scrollBar.stepSize));
     }
 
     ListView {

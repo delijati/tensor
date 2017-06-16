@@ -99,7 +99,7 @@ Rectangle {
 
         ScrollBar.vertical: ScrollBar {
             id: scrollBar
-            stepSize: 0.1
+            stepSize: chatView.visibleArea.heightRatio / 3
         }
     }
 }

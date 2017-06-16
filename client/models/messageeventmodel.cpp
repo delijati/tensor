@@ -19,7 +19,7 @@
 #include "messageeventmodel.h"
 
 #include <algorithm>
-
+#include <QtCore/QRegularExpression>
 #include <QtCore/QDebug>
 
 #include "lib/connection.h"
@@ -54,19 +54,18 @@ void MessageEventModel::changeRoom(QMatrixClient::Room* room)
     {
         using namespace QMatrixClient;
         connect( room, &Room::aboutToAddNewMessages,
-                [=](const Events& events)
+				[=](const RoomEvents& events)
                 {
                     beginInsertRows(QModelIndex(), 0, events.size() - 1);
                 });
         connect( room, &Room::aboutToAddHistoricalMessages,
-                [=](const Events& events)
+				[=](const RoomEvents& events)
                 {
                     beginInsertRows(QModelIndex(),
                                     rowCount(), rowCount() + events.size() - 1);
                 });
         connect( room, &Room::addedMessages,
                  this, &MessageEventModel::endInsertRows );
-        qDebug() << "connected" << room;
     }
     endResetModel();
 }
@@ -94,16 +93,16 @@ int MessageEventModel::rowCount(const QModelIndex& parent) const
 {
     if( !m_currentRoom || parent.isValid() )
         return 0;
-    return m_currentRoom->messageEvents().count();
+	return m_currentRoom->messageEvents().size();
 }
 
 QVariant MessageEventModel::data(const QModelIndex& index, int role) const
 {
     if( !m_currentRoom ||
-            index.row() < 0 || index.row() >= m_currentRoom->messageEvents().count() )
+			index.row() < 0 || index.row() >= m_currentRoom->messageEvents().size() )
         return QVariant();
 
-    QMatrixClient::Event* event = *(m_currentRoom->messageEvents().end() - index.row() - 1);
+	QMatrixClient::RoomEvent *event = (m_currentRoom->messageEvents().end() - index.row() - 1)->event();
 
     if( role == Qt::DisplayRole )
     {
@@ -111,7 +110,7 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
         {
             QMatrixClient::RoomMessageEvent* e = static_cast<QMatrixClient::RoomMessageEvent*>(event);
             QMatrixClient::User* user = m_connection->user(e->userId());
-            return QString("%1 (%2): %3").arg(user->name()).arg(user->id()).arg(e->body());
+			return QString("%1 (%2): %3").arg(user->displayname()).arg(user->id()).arg(e->plainBody());
         }
         if( event->type() == QMatrixClient::EventType::RoomMember )
         {
@@ -152,7 +151,7 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
 
     if( role == TimeRole )
     {
-        return event->timestamp();
+		return event->timestamp();
     }
 
     if( role == DateRole )
@@ -165,7 +164,7 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
         if( event->type() == QMatrixClient::EventType::RoomMessage )
         {
             QMatrixClient::RoomMessageEvent* e = static_cast<QMatrixClient::RoomMessageEvent*>(event);
-            QMatrixClient::User *user = m_connection->user(e->userId());
+            QMatrixClient::User *user = m_connection->user(e->senderId());
             return user->displayname();
         }
         return QVariant();
@@ -176,7 +175,13 @@ QVariant MessageEventModel::data(const QModelIndex& index, int role) const
         if( event->type() == QMatrixClient::EventType::RoomMessage )
         {
             QMatrixClient::RoomMessageEvent* e = static_cast<QMatrixClient::RoomMessageEvent*>(event);
-            return e->body();
+            QString body = e->plainBody();
+            body.replace("<", "&lt;").replace(">", "&gt;");
+
+            QRegularExpression reLinks("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
+			body.replace(reLinks, "<a href=\"\\1\">\\1</a>");
+
+			return body;
         }
         if( event->type() == QMatrixClient::EventType::RoomMember )
         {

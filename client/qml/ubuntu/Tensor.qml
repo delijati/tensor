@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import Qt.labs.settings 1.0
 import Matrix 1.0
 
 
@@ -33,7 +34,15 @@ MainView {
     property bool initialised: false
 
     Connection { id: connection }
-    Settings   { id: settings }
+    Settings   {
+        id: settings
+
+        property string user: ""
+        property string token: ""
+
+        property alias winWidth: window.width
+        property alias winHeight: window.height
+    }
 
     function resync() {
         if(!initialised) {
@@ -45,14 +54,19 @@ MainView {
         connection.sync(30000)
     }
 
+    function reconnect() {
+        connection.connectWithToken(connection.userId(), connection.token())
+    }
+
     function login(user, pass, connect) {
         if(!connect) connect = connection.connectToServer
 
         connection.connected.connect(function() {
-            settings.setValue("user",  connection.userId())
-            settings.setValue("token", connection.token())
+            settings.user = connection.userId()
+            settings.token = connection.token()
 
-            connection.connectionError.connect(connection.reconnect)
+            connection.syncError.connect(reconnect)
+            connection.resolveError.connect(reconnect)
             connection.syncDone.connect(resync)
             connection.reconnected.connect(resync)
 
@@ -78,8 +92,8 @@ MainView {
         window: window
         anchors.fill: parent
         Component.onCompleted: {
-            var user =  settings.value("user")
-            var token = settings.value("token")
+            var user = settings.user
+            var token = settings.token
             if(user && token) {
                 login.login(true)
                 window.login(user, token, connection.connectWithToken)

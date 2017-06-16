@@ -6,6 +6,8 @@
         <file>qml/Tensor.qml</file>
         <file>qml/ChatRoom.qml</file>
         <file>qml/RoomView.qml</file>
+        <file>qml/jschat.js</file>
+        <file>qml/Theme.qml</file>
     </qresource>
     <qresource prefix="/ubuntu">
         <file>logo.png</file>

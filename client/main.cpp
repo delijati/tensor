@@ -21,6 +21,12 @@ int main(int argc, char* argv[]) {
     app.setOrganizationName("David A Roberts");
     app.setOrganizationDomain("davidar.io");
     app.setApplicationName("Tensor");
+    app.setApplicationVersion("Q0.4");
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+
+	// debugging
+	QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
+
     QQuickView view;
     if(qgetenv("QT_QUICK_CORE_PROFILE").toInt()) {
         QSurfaceFormat f = view.format();
@@ -41,11 +47,12 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<Connection>        ("Matrix", 1, 0, "Connection");
     qmlRegisterType<MessageEventModel> ("Matrix", 1, 0, "MessageEventModel");
     qmlRegisterType<RoomListModel>     ("Matrix", 1, 0, "RoomListModel");
-    qmlRegisterType<Settings>          ("Matrix", 1, 0, "Settings");
+    qmlRegisterSingletonType(QUrl("qrc:/qml/Theme.qml"), "Tensor", 1, 0, "Theme");
 
     // view.setSource(QUrl("qrc:/qml/Tensor.qml"));
     view.setSource(QUrl("qrc:/ubuntu/qml/ubuntu/Tensor.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+	view.setTitle("Tensor " + app.applicationVersion());
     if(QGuiApplication::platformName() == QLatin1String("qnx") ||
        QGuiApplication::platformName() == QLatin1String("eglfs")) {
         view.showFullScreen();

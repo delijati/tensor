@@ -1,19 +1,17 @@
 TEMPLATE = app
 
 QT += qml quick
-CONFIG += c++11
+CONFIG += c++11 qml_debug
 
 include(lib/libqmatrixclient.pri)
 
 HEADERS += \
     client/models/messageeventmodel.h \
-    client/models/roomlistmodel.h \
-    client/settings.h
+    client/models/roomlistmodel.h
 
 SOURCES += client/main.cpp \
     client/models/messageeventmodel.cpp \
-    client/models/roomlistmodel.cpp \
-    client/settings.cpp
+    client/models/roomlistmodel.cpp
 
 RESOURCES += client/resources.qrc
 
@@ -22,6 +20,9 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+ICON = tensor.icns
+RC_ICONS = tensor.ico
 
 DISTFILES += \
     android/AndroidManifest.xml \

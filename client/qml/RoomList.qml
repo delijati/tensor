@@ -1,9 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import Matrix 1.0
+import Tensor 1.0
+import 'jschat.js' as JsChat
 
 Rectangle {
-    color: "#6a1b9a"
+    color: Theme.roomListBg
 
     signal enterRoom(var room)
     signal joinRoom(string name)
@@ -12,6 +14,13 @@ Rectangle {
 
     RoomListModel {
         id: rooms
+
+        onDataChanged: {
+            // may have received a message but if focused, mark as read
+            var room = currentRoom()
+            if (room != null) room.markAllMessagesAsRead()
+
+        }
     }
 
     function setConnection(conn) {
@@ -19,21 +28,33 @@ Rectangle {
     }
 
     function init() {
+        var defaultRoom = "#tensor:matrix.org"
         initialised = true
         var found = false
-        for(var i = 0; i < rooms.rowCount(); i++) {
-            if(rooms.roomAt(i).canonicalAlias() === "#tensor:matrix.org") {
+        for (var i = 0; i < rooms.rowCount(); i++) {
+            if (rooms.roomAt(i).canonicalAlias === defaultRoom) {
                 roomListView.currentIndex = i
                 enterRoom(rooms.roomAt(i))
                 found = true
             }
         }
-        if(!found) joinRoom("#tensor:matrix.org")
+        if (!found) joinRoom(defaultRoom)
     }
 
     function refresh() {
         if(roomListView.visible)
             roomListView.forceLayout()
+    }
+
+    function changeRoom(dir) {
+        roomListView.currentIndex = JsChat.posmod(roomListView.currentIndex + dir, roomListView.count);
+        enterRoom(rooms.roomAt(roomListView.currentIndex))
+    }
+
+    function currentRoom() {
+        if (roomListView.currentIndex < 0) return null
+        var room = rooms.roomAt(roomListView.currentIndex)
+        return room
     }
 
     Column {
@@ -53,8 +74,9 @@ Rectangle {
                 Label {
                     id: roomLabel
                     text: display
-                    color: "white"
+                    color: roomEventState == "highlight" ? Theme.highlightRoomFg : (roomEventState == "unread" ? Theme.unreadRoomFg : Theme.normalRoomFg)
                     elide: Text.ElideRight
+                    font.family: Theme.nickFont
                     font.bold: roomListView.currentIndex == index
                     anchors.margins: 2
                     anchors.leftMargin: 6
@@ -75,13 +97,15 @@ Rectangle {
             highlight: Rectangle {
                 height: 20
                 radius: 2
-                color: "#9c27b0"
+                color: Theme.roomListSelectedBg
             }
+            highlightMoveDuration: 0
 
             onCountChanged: if(initialised) {
                 roomListView.currentIndex = count-1
                 enterRoom(rooms.roomAt(count-1))
             }
+
         }
 
         TextField {

@@ -8,7 +8,7 @@ Page {
     visible: false
 
     function setRoom(room) {
-        title = room.displayName()
+        title = room.name
         chat.setRoom(room)
     }
 

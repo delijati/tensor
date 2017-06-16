@@ -27,7 +27,7 @@ Page {
         var found = false
         console.log("Rooms: " + rooms.rowCount())
         for(var i = 0; i < rooms.rowCount(); i++) {
-            console.log(rooms.roomAt(i).displayName())
+            console.log(rooms.roomAt(i).name)
         }
     }
 

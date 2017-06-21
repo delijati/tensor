@@ -6,6 +6,8 @@
 #include "room.h"
 #include "user.h"
 #include "jobs/syncjob.h"
+#include "jobs/joinroomjob.h"
+#include "jobs/leaveroomjob.h"
 #include "models/messageeventmodel.h"
 #include "models/roomlistmodel.h"
 #include "settings.h"
@@ -37,6 +39,8 @@ int main(int argc, char* argv[]) {
     new QQmlFileSelector(view.engine(), &view);
 
     qmlRegisterType<SyncJob>(); qRegisterMetaType<SyncJob*> ("SyncJob*");
+    qmlRegisterType<JoinRoomJob>(); 	qRegisterMetaType<JoinRoomJob*> ("JoinRoomJob*");
+    qmlRegisterType<LeaveRoomJob>(); 	qRegisterMetaType<LeaveRoomJob*> ("LeaveRoomJob*");
     qmlRegisterType<Room>();    qRegisterMetaType<Room*>    ("Room*");
     qmlRegisterType<User>();    qRegisterMetaType<User*>    ("User*");
 

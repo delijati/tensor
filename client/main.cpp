@@ -7,6 +7,8 @@
 #include "room.h"
 #include "user.h"
 #include "jobs/syncjob.h"
+#include "jobs/joinroomjob.h"
+#include "jobs/leaveroomjob.h"
 #include "models/messageeventmodel.h"
 #include "models/roomlistmodel.h"
 #include "settings.h"
@@ -24,8 +26,8 @@ int main(int argc, char* argv[]) {
     app.setApplicationVersion("Q0.4");
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-	// debugging
-	QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
+    // debugging
+    QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
 
     QQuickView view;
     if(qgetenv("QT_QUICK_CORE_PROFILE").toInt()) {
@@ -41,6 +43,8 @@ int main(int argc, char* argv[]) {
     new QQmlFileSelector(view.engine(), &view);
 
     qmlRegisterType<SyncJob>(); qRegisterMetaType<SyncJob*> ("SyncJob*");
+    qmlRegisterType<JoinRoomJob>(); 	qRegisterMetaType<JoinRoomJob*> ("JoinRoomJob*");
+    qmlRegisterType<LeaveRoomJob>(); 	qRegisterMetaType<LeaveRoomJob*> ("LeaveRoomJob*");
     qmlRegisterType<Room>();    qRegisterMetaType<Room*>    ("Room*");
     qmlRegisterType<User>();    qRegisterMetaType<User*>    ("User*");
 

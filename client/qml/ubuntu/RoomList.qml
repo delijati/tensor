@@ -3,14 +3,10 @@ import Ubuntu.Components 1.3
 import Matrix 1.0
 
 
-Page {
+BasePage {
     id: roomlist
     title: i18n.tr("RoomList")
     visible: false
-
-    signal joinRoom(string name)
-
-    property bool initialised: false
 
     RoomListModel {
         id: rooms
@@ -23,8 +19,6 @@ Page {
     function init(connection) {
         setConnection(connection)
         roomview.setConnection(connection)
-        initialised = true
-        var found = false
         console.log("Rooms: " + rooms.rowCount())
         for(var i = 0; i < rooms.rowCount(); i++) {
             console.log(rooms.roomAt(i).name)
@@ -33,7 +27,14 @@ Page {
 
     function refresh() {
         if(roomListView.visible)
-            roomListView.forceLayout()
+        roomListView.forceLayout()
+    }
+
+    function currentRoom(index) {
+        console.log("Current room: " + index)
+        if (index < 0) return null
+        var room = rooms.roomAt(index)
+        return room
     }
 
     Column {
@@ -43,7 +44,7 @@ Page {
             id: roomListView
             model: rooms
             width: parent.width
-            height: parent.height - textEntry.height
+            height: parent.height
 
             Component.onCompleted: {
                 visible = true;
@@ -72,15 +73,28 @@ Page {
                     pageStack.push(roomview)
                 }
 
+                leadingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconName: "delete"
+                            text: i18n.tr("Leave")
+                            onTriggered: {
+                                var current = currentRoom(index)
+                                if (current !== null) {
+                                    leaveRoom(current)
+                                    // TODO we need a left room event
+                                    console.log("Leaving room: " + display)
+                                    refresh()
+                                } else {
+                                    console.log("Unable to leave room: " + current)
+                                }
+                            }
+                        }
+                    ]
+                }
+
             }
 
-        }
-
-        TextField {
-            id: textEntry
-            width: parent.width
-            placeholderText: qsTr("Join room...")
-            onAccepted: { joinRoom(text); text = "" }
         }
     }
 }

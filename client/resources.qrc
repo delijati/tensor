@@ -12,6 +12,9 @@
     <qresource prefix="/ubuntu">
         <file>logo.png</file>
         <file>qml/ubuntu/Login.qml</file>
+        <file>qml/ubuntu/About.qml</file>
+        <file>qml/ubuntu/BasePage.qml</file>
+        <file>qml/ubuntu/DialogJoinRoom.qml</file>
         <file>qml/ubuntu/RoomList.qml</file>
         <file>qml/ubuntu/Tensor.qml</file>
         <file>qml/ubuntu/ChatRoom.qml</file>

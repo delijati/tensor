@@ -2,7 +2,7 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 
 
-Page {
+BasePage {
     id: roomview
     title: i18n.tr("Room")
     visible: false

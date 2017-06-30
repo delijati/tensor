@@ -15,6 +15,9 @@ MainView {
      when the device is rotated. The default is false.
     */
     //automaticOrientation: true
+    
+    // automatically anchor items to keyboard that are anchored to the bottom
+    anchorToKeyboard: true
 
     width: units.gu(50)
     height: units.gu(75)

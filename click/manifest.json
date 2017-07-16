@@ -9,7 +9,7 @@
             "desktop": "tensor.desktop"
         }
     },
-    "version": "0.4.1",
+    "version": "0.6.1",
     "maintainer": "Josip Delic <delijati@gmx.net>",
     "framework": "ubuntu-sdk-15.04"
 }

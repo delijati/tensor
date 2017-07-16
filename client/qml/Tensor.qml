@@ -90,6 +90,7 @@ Rectangle {
                     setConnection(connection)
                     enterRoom.connect(roomView.setRoom)
                     joinRoom.connect(connection.joinRoom)
+                    leaveRoom.connect(connection.leaveRoom)
                 }
             }
 

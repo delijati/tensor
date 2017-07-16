@@ -9,6 +9,7 @@ Rectangle {
 
     signal enterRoom(var room)
     signal joinRoom(string name)
+    signal leaveRoom(var room)
 
     property bool initialised: false
 
@@ -87,9 +88,14 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
                     onPressed: {
                         roomListView.currentIndex = index
                         enterRoom(rooms.roomAt(index))
+
+                    }
+                    onClicked: {
+                        if (mouse.button === Qt.RightButton) contextMenu.popup();
                     }
                 }
             }
@@ -106,6 +112,13 @@ Rectangle {
                 enterRoom(rooms.roomAt(count-1))
             }
 
+            Menu {
+                id: contextMenu
+                MenuItem {
+                    text: qsTr("Leave")
+                    onTriggered: leaveRoom(currentRoom())
+                }
+            }
         }
 
         TextField {

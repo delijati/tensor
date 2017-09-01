@@ -10,14 +10,15 @@ Component {
       text: i18n.tr("Join room:")
 
       function onJoinedRoom(room) {
-         // TODO never called needs to be fixed
          console.log("Joined room: " + room)
          PopupUtils.close(dialogJoinRoom.current)
+         roomview.setRoom(room)
+         pageStack.push(roomview)
       }
 
       Component.onCompleted: {
-         console.log("Popup called!!")
-         window.joinedRoom.connect(onJoinedRoom)
+         console.log("Popup opened!")
+         connection.joinedRoom.connect(onJoinedRoom)
       }
 
       TextField {

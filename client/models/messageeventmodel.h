@@ -31,7 +31,7 @@ namespace QMatrixClient
 
 class MessageEventModel: public QAbstractListModel
 {
-        Q_OBJECT
+    Q_OBJECT
     public:
         enum EventRoles {
             EventTypeRole = Qt::UserRole + 1,

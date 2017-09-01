@@ -84,7 +84,6 @@ BasePage {
                                     leaveRoom(current)
                                     // TODO we need a left room event
                                     console.log("Leaving room: " + display)
-                                    refresh()
                                 } else {
                                     console.log("Unable to leave room: " + current)
                                 }

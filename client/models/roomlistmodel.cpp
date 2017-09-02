@@ -44,6 +44,7 @@ void RoomListModel::setConnection(QMatrixClient::Connection* connection)
     m_rooms.clear();
 
     connect( connection, &QMatrixClient::Connection::newRoom, this, &RoomListModel::addRoom );
+    connect( connection, &QMatrixClient::Connection::joinedRoom, this, &RoomListModel::addRoom );
     connect( connection, &QMatrixClient::Connection::leftRoom, this, &RoomListModel::removeRoom );
 
     for( QMatrixClient::Room* room: connection->roomMap().values() ) {

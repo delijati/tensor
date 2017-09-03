@@ -35,7 +35,6 @@ MainView {
     }
 
     property bool initialised: false
-    signal joinRoom(string name)
     signal leaveRoom(var room)
 
     Connection { id: connection }
@@ -90,7 +89,6 @@ MainView {
             })
             connection.resolveServer(userParts[1])
         }
-        joinRoom.connect(connection.joinRoom)
         leaveRoom.connect(connection.leaveRoom)
     }
 

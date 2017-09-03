@@ -30,13 +30,6 @@ BasePage {
         roomListView.forceLayout()
     }
 
-    function currentRoom(index) {
-        console.log("Current room: " + index)
-        if (index < 0) return null
-        var room = rooms.roomAt(index)
-        return room
-    }
-
     Column {
         anchors.fill: parent
 
@@ -79,7 +72,7 @@ BasePage {
                             iconName: "delete"
                             text: i18n.tr("Leave")
                             onTriggered: {
-                                var current = currentRoom(index)
+                                var current = rooms.roomAt(index)
                                 if (current !== null) {
                                     leaveRoom(current)
                                     // TODO we need a left room event

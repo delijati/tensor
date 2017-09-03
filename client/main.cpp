@@ -30,12 +30,14 @@ int main(int argc, char* argv[]) {
     QLoggingCategory::setFilterRules(QStringLiteral("libqmatrixclient.main.debug=true"));
 
     QQuickView view;
+
     if(qgetenv("QT_QUICK_CORE_PROFILE").toInt()) {
         QSurfaceFormat f = view.format();
         f.setProfile(QSurfaceFormat::CoreProfile);
         f.setVersion(4, 4);
         view.setFormat(f);
     }
+
     QQmlApplicationEngine engine;
     engine.addImportPath("./lib/arm-linux-gnueabihf/QtQuick/Controls");
     engine.addImportPath("./lib/arm-linux-gnueabihf/QtQuick/Dialogs");

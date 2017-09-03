@@ -45,7 +45,7 @@ Component {
             color: UbuntuColors.orange
             onClicked: {
                console.log("Joining room: " + room.text);
-               joinRoom(room.text);
+               connection.joinRoom(room.text);
             }
          }
       }
